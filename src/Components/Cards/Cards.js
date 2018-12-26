@@ -13,10 +13,10 @@ class Cards extends Component {
 	componentDidMount() {
 		fetch('https://jsonplaceholder.typicode.com/users')
 			.then(res => res.json())
-			.then(json => {
+			.then(data => {
 				this.setState({
 					isLoaded: true,
-					users: json
+					users: data
 				})
 			});
 		}
@@ -31,7 +31,7 @@ class Cards extends Component {
 		}
 		else {
 			return (
-				<div>
+				<div id="users-div">
 					{
 						filterUsers.map(user => (
 							<div key={ user.id } className="bg-light-green dib br3 pa3 ma3 grow bw2 shadow-5">

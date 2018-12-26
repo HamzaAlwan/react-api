@@ -21,9 +21,9 @@ class App extends Component {
 	render() {
 		return (
 			<div className="tc">
-				<h1>Robot Users</h1>
+				<h1>Robo Users</h1>
 				<SearchBox searchChange={this.onSearchChange} />
-				<Cards search={this.state.searchField}/>
+				<Cards search={this.state.searchField} />
 			</div>
 		);
 	}
