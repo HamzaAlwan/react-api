@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
 import './App.css';
-import Cards from './Components/Cards/Cards';
-import SearchBox from './Components/SearchBox/SearchBox';
+import Cards from '../Components/Cards/Cards';
+import SearchBox from '../Components/SearchBox/SearchBox';
+import ErrorBoundary from '../Components/ErrorBoundary';
 
 class App extends Component {
 	constructor(){
@@ -23,7 +24,9 @@ class App extends Component {
 			<div className="tc">
 				<h1>Robo Users</h1>
 				<SearchBox searchChange={this.onSearchChange} />
-				<Cards search={this.state.searchField} />
+				<ErrorBoundary>
+					<Cards search={this.state.searchField} />
+				</ErrorBoundary>
 			</div>
 		);
 	}

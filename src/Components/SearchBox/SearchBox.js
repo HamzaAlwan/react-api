@@ -5,7 +5,7 @@ import './SearchBox.css';
 class SearchBox extends Component {
 
 	constructor(props){
-		super(props);
+		super();
 	}
 	
 	render() {
