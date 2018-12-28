@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import { createLogger } from 'redux-logger';
 import 'tachyons';
 
 import './index.css';
@@ -9,7 +10,9 @@ import App from './Container/App';
 import { searchUsers } from './redux/reducers';
 import * as serviceWorker from './serviceWorker';
 
-const store = createStore(searchUsers);
+const logger = createLogger();
+// the const is where all the states are saved;
+const store = createStore(searchUsers, applyMiddleware(logger));
 
 ReactDOM.render(
 	<Provider store={store}>
