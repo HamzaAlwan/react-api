@@ -8,8 +8,21 @@ class App extends Component {
 	constructor(){
 		super();
 		this.state = {
-			searchField: ''
+			searchField: '',
+			users: [],
+			isLoaded: false
 		}
+	}
+
+	componentDidMount() {
+	fetch('https://jsonplaceholder.typicode.com/users')
+		.then(res => res.json())
+		.then(data => {
+			this.setState({
+				isLoaded: true,
+				users: data
+			})
+		});
 	}
 
 	onSearchChange = (event) => {
@@ -19,11 +32,19 @@ class App extends Component {
 	}
 
 	render() {
+		let { searchField, isLoaded, users } = this.state;
+		let filteredUsers = users.filter(user => {
+			return user.name.toLowerCase().includes(searchField.toLowerCase())
+		});
 		return (
 			<div className="tc">
 				<h1>Robo Users</h1>
 				<SearchBox searchChange={this.onSearchChange} />
-				<Cards search={this.state.searchField} />
+				<Cards 
+				filteredUsers={filteredUsers} 
+				search={searchField}
+				Loaded={isLoaded}
+				 />
 			</div>
 		);
 	}
