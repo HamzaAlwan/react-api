@@ -4,17 +4,21 @@ import { connect } from 'react-redux';
 import './App.css';
 import Cards from '../Components/Cards/Cards';
 import SearchBox from '../Components/SearchBox/SearchBox';
-import { setSearchField } from '../redux/actions';
+import { setSearchField, requestUsers } from '../redux/actions';
 
 const mapStateToProps = state => {
 	return {
-		searchField: state.searchField
+		searchField: state.searchUsers.searchField,
+		users: state.requestUsers.users,
+		isPending: state.requestUsers.isPending,
+		error: state.requestUsers.error
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onSearchChange: event => dispatch(setSearchField(event.target.value))
+		onSearchChange: event => dispatch(setSearchField(event.target.value)),
+		onRequestUsers: () => dispatch(requestUsers())
 	};
 };
 
@@ -22,25 +26,16 @@ class App extends Component {
 	constructor() {
 		super();
 		this.state = {
-			users: [],
 			isLoaded: false
 		};
 	}
 
 	componentDidMount() {
-		fetch('https://jsonplaceholder.typicode.com/users')
-			.then(res => res.json())
-			.then(data => {
-				this.setState({
-					isLoaded: true,
-					users: data
-				});
-			});
+		this.props.onRequestUsers();
 	}
 
 	render() {
-		const { isLoaded, users } = this.state;
-		const { searchField, onSearchChange } = this.props;
+		const { searchField, onSearchChange, users, isPending } = this.props;
 		const filteredUsers = users.filter(user => {
 			return user.name.toLowerCase().includes(searchField.toLowerCase());
 		});
@@ -51,7 +46,7 @@ class App extends Component {
 				<Cards
 					filteredUsers={filteredUsers}
 					search={searchField}
-					Loaded={isLoaded}
+					isPending={isPending}
 				/>
 			</div>
 		);

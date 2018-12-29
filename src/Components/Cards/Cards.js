@@ -1,8 +1,8 @@
 import React from 'react';
 import './Cards.css';
 
-const Cards = ({ filteredUsers, Loaded }) => {
-	if (!Loaded) return <h1 className="tc pa3 ma3 bw2">Loading Data...</h1>;
+const Cards = ({ filteredUsers, isPending }) => {
+	if (isPending) return <h1 className="tc pa3 ma3 bw2">Loading Data...</h1>;
 	else {
 		return (
 			<div id="users-div">
